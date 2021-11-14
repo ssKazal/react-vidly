@@ -10,6 +10,7 @@ import Posts from './Components/Posts';
 import NotFound from './Components/NotFound';
 import Dashboard from './Components/Admin/Dashboard';
 import MovieForm from './Components/MovieForm';
+import Login from './Components/Login';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       </div>
       <main className="container" style={{ paddingTop: 20 }}>
         <Switch>
+          <Route path="/login" component={Login} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/posts/:year?/:month?" component={Posts} />
           <Route path="/products/:id" component={ProductDetails} />
