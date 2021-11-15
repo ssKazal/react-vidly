@@ -8,7 +8,7 @@ class MoviesTable extends React.Component {
     { path: 'title', label: 'Title', content: (movie) => <Link to={`/movies/${movie.id}`}>{movie.title}</Link> },
     { path: 'genre.name', label: 'Genre' },
     { path: 'numberInStock', label: 'Stock' },
-    { path: 'dailyRentanRate', label: 'Rate' },
+    { path: 'dailyRentalRate', label: 'Rate' },
     { key: 'like', content: (movie) => <Like liked={movie.liked} onLikeToggle={() => this.props.onLike(movie)} /> },
     {
       key: 'delete',

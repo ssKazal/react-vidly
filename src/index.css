@@ -13,3 +13,7 @@ code {
 .clickable {
   cursor: pointer;
 }
+
+#root #new-movie {
+  margin-bottom: 20px;
+}
