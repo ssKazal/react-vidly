@@ -38,9 +38,9 @@ class Form extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const errors = this.validate();
-    this.setState({ errors: errors || {} });
-    if (errors) return;
+    // const errors = this.validate();
+    // this.setState({ errors: errors || {} });
+    // if (errors) return;
 
     this.doSubmit();
   };
@@ -69,7 +69,7 @@ class Form extends React.Component {
 
   renderButton(label) {
     return (
-      <button type="submit" className="btn btn-primary" disabled={this.validate()}>
+      <button type="submit" className="btn btn-primary">
         {label}
       </button>
     );

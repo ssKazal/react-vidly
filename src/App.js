@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Movies from './Components/Movies';
 import './App.css';
@@ -12,10 +13,12 @@ import Dashboard from './Components/Admin/Dashboard';
 import MovieForm from './Components/MovieForm';
 import LoginForm from './Components/LoginForm';
 import RegistrationForm from './Components/RegistrationForm';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div>
+      <ToastContainer />
       <div>
         <NavBar />
       </div>

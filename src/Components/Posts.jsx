@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
-
-const url = 'https://jsonplaceholder.typicode.com/posts';
+import httpRequest from '../Services/HttpService';
+import config from '../config.json';
+import { toast } from 'react-toastify';
 
 class Post extends React.Component {
   state = {
@@ -9,13 +9,13 @@ class Post extends React.Component {
   };
 
   async componentDidMount() {
-    const { data: posts } = await axios.get(url);
+    const { data: posts } = await httpRequest.get(config.url);
     this.setState({ posts });
   }
 
   handleAdd = async () => {
     const obj = { title: 'a', body: 'b' };
-    const { data: post } = await axios.post(url, obj);
+    const { data: post } = await httpRequest.post(config.url, obj);
 
     const posts = [post, ...this.state.posts];
     this.setState({ posts });
@@ -23,7 +23,7 @@ class Post extends React.Component {
 
   handleUpdate = async (post) => {
     post.title = 'Updated';
-    await axios.put(url + '/' + post.id, post);
+    await httpRequest.put(config.url + '/' + post.id, post);
 
     const posts = [...this.state.posts];
     const index = posts.indexOf(post);
@@ -36,10 +36,10 @@ class Post extends React.Component {
     const posts = this.state.posts.filter((p) => p.id !== post.id);
     this.setState({ posts });
     try {
-      await axios.delete(url + '/' + post.id);
-      throw new Error('');
+      await httpRequest.delete(config.url + '/' + post.id);
+      // throw new Error('');
     } catch (ex) {
-      alert('Something went wrong!');
+      if (ex.response && ex.response.status === 404) toast('Already deleted');
       this.setState({ posts: originalPosts });
     }
   };

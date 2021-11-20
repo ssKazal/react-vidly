@@ -1,8 +1,8 @@
 import React from 'react';
 import Joi from 'joi';
 import Form from './Common/Form';
-import { getGenres } from '../Services/FakeGenreServices';
-import { getMovie, saveMovie } from '../Services/FakeMovieServices';
+import { getGenres } from '../Services/GenreService';
+import { getMovie, saveMovie } from '../Services/MovieService';
 
 class MovieForm extends Form {
   state = {
@@ -21,18 +21,30 @@ class MovieForm extends Form {
 
   schema = Joi.object(this.schemaMap);
 
-  componentDidMount() {
-    const genres = getGenres();
+  async populateGenres() {
+    const { data: genres } = await getGenres();
     this.setState({ genres });
+    console.log(genres);
+  }
 
-    const movieId = this.props.match.params.id;
-    if (!movieId) return;
+  async populateMovie() {
+    try {
+      const movieId = this.props.match.params.id;
+      if (!movieId) return;
 
-    const movie = getMovie(movieId);
+      const { data: movie } = await getMovie(movieId);
+      console.log(movie);
+      this.setState({ data: this.mapToViewModel(movie) });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        this.props.history.replace('/not-found');
+      }
+    }
+  }
 
-    if (!movie) return this.props.history.replace('/not-found');
-
-    this.setState({ data: this.mapToViewModel(movie) });
+  async componentDidMount() {
+    await this.populateGenres();
+    await this.populateMovie();
   }
 
   mapToViewModel(movie) {
@@ -40,14 +52,14 @@ class MovieForm extends Form {
       id: movie.id,
       title: movie.title,
       genreId: movie.genre.id,
-      numberInStock: movie.numberInStock,
-      dailyRentalRate: movie.dailyRentalRate,
+      numberInStock: movie.number_in_stock,
+      dailyRentalRate: movie.daily_rental_rate,
     };
   }
 
-  doSubmit = () => {
+  doSubmit = async () => {
     // Call the server
-    saveMovie(this.state.data);
+    await saveMovie(this.state.data);
     this.props.history.push('/movies');
 
     console.log('Submitted');
