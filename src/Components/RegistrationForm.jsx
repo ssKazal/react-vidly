@@ -1,27 +1,38 @@
 import React from 'react';
 import Form from './Common/Form';
 import Joi from 'joi';
+import * as UserService from '../Services/UserService';
 
 class RegistrationForm extends Form {
   state = {
-    data: { username: '', password: '', name: '' },
-    errors: { username: '', password: '', name: '' },
+    data: { email: '', password: '', confirmPassword: '' },
+    errors: { email: '', password: '', confirmPassword: '' },
   };
 
   schemaMap = {
-    username: Joi.string()
+    email: Joi.string()
       .required()
       .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-      .label('Username'),
+      .label('Email'),
     password: Joi.string().required().min(5).label('Password'),
-    name: Joi.string().required().label('Name'),
+    confirmPassword: Joi.string().required().min(5).label('Confirm Password'),
   };
 
   schema = Joi.object(this.schemaMap);
 
-  doSubmit = () => {
+  doSubmit = async () => {
     // Call the server
-    console.log('Submitted');
+    try {
+      await UserService.register(this.state.data);
+      console.log('Submitted');
+    } catch (e) {
+      console.log(e.response.data.email[0], e.response.status);
+      if (e.response && e.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = e.response.data.email[0];
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
@@ -29,9 +40,9 @@ class RegistrationForm extends Form {
       <div>
         <h1>Registration</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput('username', 'Username', 'email')}
+          {this.renderInput('email', 'Email', 'email')}
           {this.renderInput('password', 'Password', 'password')}
-          {this.renderInput('name', 'Name')}
+          {this.renderInput('confirmPassword', 'Confirm Password', 'password')}
           {this.renderButton('Register')}
         </form>
       </div>

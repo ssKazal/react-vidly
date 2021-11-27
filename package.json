@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
-  "headers": {"Access-Control-Allow-Origin": "*"},
+  "headers": {
+    "Access-Control-Allow-Origin": "*"
+  },
   "dependencies": {
     "@sentry/react": "^6.15.0",
     "@sentry/tracing": "^6.15.0",
@@ -17,6 +19,7 @@
     "http-proxy-middleware": "^2.0.1",
     "joi": "^17.4.2",
     "joi-browser": "^13.4.0",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "query-string": "^7.0.1",

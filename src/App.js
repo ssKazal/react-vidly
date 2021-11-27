@@ -13,6 +13,7 @@ import Dashboard from './Components/Admin/Dashboard';
 import MovieForm from './Components/MovieForm';
 import LoginForm from './Components/LoginForm';
 import RegistrationForm from './Components/RegistrationForm';
+import Logout from './Components/Logout';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/movies/new" component={MovieForm} />
           <Route path="/registration" component={RegistrationForm} />
           <Route path="/login" component={LoginForm} />
+          <Route path="/logout" component={Logout} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/posts/:year?/:month?" component={Posts} />
           <Route path="/products/:id" component={ProductDetails} />

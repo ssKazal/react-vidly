@@ -6,7 +6,7 @@ const Input = ({ name, label, error, ...rest }) => {
       <label htmlFor={name} className="form-label">
         {label}
       </label>
-      <input name={name} id={name} {...rest} className="form-control" autoFocus={name === 'username' ? 'autoFocus' : null} />
+      <input name={name} id={name} {...rest} className="form-control" autoFocus={name === 'email' ? 'autoFocus' : null} />
       {error && <div className="alert alert-danger mt-2">{error}</div>}
     </div>
   );
